@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:17.7-alpine3.22
+    environment:
+      POSTGRES_USER: spring-rabbitmq
+      POSTGRES_PASSWORD: spring-rabbitmq
+      POSTGRES_DB: spring-rabbitmq
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '1GB'
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: spring-rabbitmq
+      RABBITMQ_DEFAULT_PASS: spring-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '1GB'
+
+volumes:
+  postgresql_data:
+  rabbitmq_data:

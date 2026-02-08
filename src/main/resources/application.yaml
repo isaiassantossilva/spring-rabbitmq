@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: spring-rabbitmq
+
+  threads.virtual.enabled: true
+  jackson.property-naming-strategy: SNAKE_CASE
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: spring-rabbitmq
+    password: spring-rabbitmq
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-rabbitmq
+    username: spring-rabbitmq
+    password: spring-rabbitmq
+
+  jpa:
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+rabbitmq:
+  queues:
+    emails:
+      name: emails
+      concurrency: 100-2000
