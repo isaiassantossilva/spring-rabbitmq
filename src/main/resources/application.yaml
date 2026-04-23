@@ -17,13 +17,15 @@ spring:
     listener:
       simple:
         acknowledge-mode: auto
+        default-requeue-rejected: false
+        prefetch: 50
+        concurrency: 3
+        max-concurrency: 10
         retry:
           enabled: true
           initial-interval: 2s
           max-attempts: 4
           multiplier: 2
-        default-requeue-rejected: false
-        prefetch: 50
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-rabbitmq
