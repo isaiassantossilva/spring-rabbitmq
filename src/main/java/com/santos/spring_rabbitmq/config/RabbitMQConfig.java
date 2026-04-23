@@ -26,6 +26,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public MessageConverter messageConverter() {
+        return new JacksonJsonMessageConverter();
+    }
+
+    @Bean
     public Queue emailQueue(QueueProperty props) {
         return QueueBuilder.durable(props.getName())
 //                .withArgument(X_DEAD_LETTER_EXCHANGE, props.getName() + DLX_SUFFIX)
@@ -48,11 +53,6 @@ public class RabbitMQConfig {
     @Bean
     public Binding dlqBinding(QueueProperty props, Queue emailDlq, DirectExchange emailDlx) {
         return BindingBuilder.bind(emailDlq).to(emailDlx).with(props.getName() + DLQ_SUFFIX);
-    }
-
-    @Bean
-    public MessageConverter messageConverter() {
-        return new JacksonJsonMessageConverter();
     }
 
     @Bean
