@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class QueueProperty {
     private String name;
+    private String concurrency;
 }

@@ -30,6 +30,11 @@ public class EmailService {
     public void sendToRecipient(EmailDTO emailDTO) {
         log.info("Receiving email: {}", emailDTO);
 
+        if (emailDTO.getRecipient() == null || emailDTO.getRecipient().isEmpty()) {
+            log.error("Email recipient is missing: {}", emailDTO);
+            throw new IllegalStateException("Email recipient is required");
+        }
+
         EmailEntity emailEntity = this.emailMapper.toEmailEntity(emailDTO);
         this.emailRepository.save(emailEntity);
 

@@ -10,6 +10,20 @@ spring:
     port: 5672
     username: spring-rabbitmq
     password: spring-rabbitmq
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: auto
+        retry:
+          enabled: true
+          initial-interval: 2s
+          max-attempts: 4
+          multiplier: 2
+        default-requeue-rejected: false
+        prefetch: 50
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-rabbitmq
@@ -29,4 +43,4 @@ rabbitmq:
   queues:
     emails:
       name: emails
-      concurrency: 100-2000
+      concurrency: 10-50

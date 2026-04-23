@@ -12,7 +12,10 @@ public class EmailListener {
 
     private final EmailService emailService;
 
-    @RabbitListener(queues = "${rabbitmq.queues.emails.name}", concurrency = "${rabbitmq.queues.emails.concurrency}")
+    @RabbitListener(
+            queues = "#{emailQueueProperty.name}",
+            concurrency = "#{emailQueueProperty.concurrency}"
+    )
     public void onReceiveEmail(EmailDTO emailDTO) {
         this.emailService.sendToRecipient(emailDTO);
     }
