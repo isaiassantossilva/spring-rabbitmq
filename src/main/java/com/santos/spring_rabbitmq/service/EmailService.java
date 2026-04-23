@@ -8,6 +8,7 @@ import com.santos.spring_rabbitmq.mapper.EmailMapper;
 import com.santos.spring_rabbitmq.repository.EmailRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,17 @@ public class EmailService {
 
     public void sendToQueue(EmailDTO emailDTO) {
         log.info("Queueing email: {}", emailDTO);
-        this.rabbitTemplate.convertAndSend(this.emailQueueProperty.getName(), emailDTO);
+        this.rabbitTemplate.convertAndSend(
+                this.emailQueueProperty.getName(),
+                emailDTO,
+                message -> {
+                    message.getMessageProperties().setHeader("x-delay", 30_000); // 30 seconds delay
+                    message.getMessageProperties().setMessageId(emailDTO.getRecipient());
+                    message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                    return message;
+                }
+//                new CorrelationData("abc-123")
+        );
     }
 
     public void sendToRecipient(EmailDTO emailDTO) {

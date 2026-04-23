@@ -14,6 +14,13 @@ spring:
     publisher-returns: true
     template:
       mandatory: true
+      observation-enabled: true
+      retry:
+        enabled: true
+        initial-interval: 1s
+        max-interval: 10s
+        multiplier: 2
+        max-retries: 3
     listener:
       simple:
         acknowledge-mode: auto
@@ -21,6 +28,7 @@ spring:
         prefetch: 50
         concurrency: 3
         max-concurrency: 10
+        observation-enabled: true
         retry:
           enabled: true
           initial-interval: 2s
