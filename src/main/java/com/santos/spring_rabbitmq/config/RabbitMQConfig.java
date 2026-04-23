@@ -3,6 +3,9 @@ package com.santos.spring_rabbitmq.config;
 import com.santos.spring_rabbitmq.config.property.QueueProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.amqp.autoconfigure.RabbitTemplateCustomizer;
@@ -79,4 +82,24 @@ public class RabbitMQConfig {
             });
         };
     }
+
+//    @Bean
+//    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+//        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+//        template.setMessageConverter(messageConverter);
+//        template.setMandatory(true);
+//        return template;
+//    }
+//
+//    @Bean
+//    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+//        SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory = new SimpleRabbitListenerContainerFactory();
+//        simpleRabbitListenerContainerFactory.setConnectionFactory(connectionFactory);
+//        simpleRabbitListenerContainerFactory.setMessageConverter(messageConverter);
+//        simpleRabbitListenerContainerFactory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+//        simpleRabbitListenerContainerFactory.setPrefetchCount(10);
+//        simpleRabbitListenerContainerFactory.setConcurrentConsumers(3);
+//        simpleRabbitListenerContainerFactory.setMaxConcurrentConsumers(10);
+//        return simpleRabbitListenerContainerFactory;
+//    }
 }
