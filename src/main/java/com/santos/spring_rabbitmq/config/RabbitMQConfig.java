@@ -9,6 +9,8 @@ import org.springframework.boot.amqp.autoconfigure.RabbitTemplateCustomizer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @Slf4j
 @Configuration
@@ -26,8 +28,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public MessageConverter messageConverter() {
-        return new JacksonJsonMessageConverter();
+    public MessageConverter messageConverter(ObjectMapper mapper) {
+        return new JacksonJsonMessageConverter((JsonMapper) mapper);
     }
 
     @Bean
